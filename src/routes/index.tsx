@@ -71,7 +71,7 @@ function Index() {
         .split("\n")
         .map((l) => l.trim())
         .filter((l) => l.length > 0);
-      const res = await fetch("/bfhl", {
+      const res = await fetch("/api/public/bfhl", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ data }),
