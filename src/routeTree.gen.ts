@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as BfhlRouteImport } from './routes/bfhl'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicBfhlRouteImport } from './routes/api.public.bfhl'
 
 const BfhlRoute = BfhlRouteImport.update({
   id: '/bfhl',
@@ -22,31 +23,40 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicBfhlRoute = ApiPublicBfhlRouteImport.update({
+  id: '/api/public/bfhl',
+  path: '/api/public/bfhl',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bfhl': typeof BfhlRoute
+  '/api/public/bfhl': typeof ApiPublicBfhlRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bfhl': typeof BfhlRoute
+  '/api/public/bfhl': typeof ApiPublicBfhlRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bfhl': typeof BfhlRoute
+  '/api/public/bfhl': typeof ApiPublicBfhlRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bfhl'
+  fullPaths: '/' | '/bfhl' | '/api/public/bfhl'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bfhl'
-  id: '__root__' | '/' | '/bfhl'
+  to: '/' | '/bfhl' | '/api/public/bfhl'
+  id: '__root__' | '/' | '/bfhl' | '/api/public/bfhl'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BfhlRoute: typeof BfhlRoute
+  ApiPublicBfhlRoute: typeof ApiPublicBfhlRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/bfhl': {
+      id: '/api/public/bfhl'
+      path: '/api/public/bfhl'
+      fullPath: '/api/public/bfhl'
+      preLoaderRoute: typeof ApiPublicBfhlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BfhlRoute: BfhlRoute,
+  ApiPublicBfhlRoute: ApiPublicBfhlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
